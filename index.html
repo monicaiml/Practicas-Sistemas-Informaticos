@@ -1,152 +1,263 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>P1 Redes Linux</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    background: #2c3e50;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.sidebar a:hover {
+    background: #34495e;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 20px;
+}
+
+.section {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+code {
+    background: #eee;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+pre {
+    background: #1e1e1e;
+    color: #00ff88;
+    padding: 10px;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+</style>
 </head>
 
 <body>
 
-<h1>P1 - Conexiones de redes y gestión en Linux</h1>
+<div class="sidebar">
+<a href="#e1">1. Interfaces</a>
+<a href="#e2">2. Rutas</a>
+<a href="#e3">3. Hostname</a>
+<a href="#e4">4. Netplan</a>
+<a href="#e5">5. Ping</a>
+<a href="#e6">6. Hosts</a>
+<a href="#e7">7. Rutas análisis</a>
+<a href="#e8">8. Puertos</a>
+<a href="#e9">9. SSH</a>
+<a href="#e10">10. Acceso remoto</a>
+<a href="#e11">11. Interfaces estado</a>
+<a href="#e12">12. ARP</a>
+<a href="#e13">13. SCP</a>
+<a href="#e14">14. SSH control</a>
+<a href="#e15">15. Reinicio</a>
+</div>
 
-<!-- MENÚ LATERAL SIMPLE -->
-<h2>Menú</h2>
-<ul>
-    <li><a href="#e1">1. Interfaces</a></li>
-    <li><a href="#e2">2. Configuración red</a></li>
-    <li><a href="#e3">3. Hostname</a></li>
-    <li><a href="#e4">4. Netplan</a></li>
-    <li><a href="#e5">5. Ping</a></li>
-    <li><a href="#e6">6. Hosts</a></li>
-    <li><a href="#e7">7. Rutas</a></li>
-    <li><a href="#e8">8. Puertos</a></li>
-    <li><a href="#e9">9. SSH</a></li>
-    <li><a href="#e10">10. Acceso remoto</a></li>
-    <li><a href="#e11">11. Interfaces</a></li>
-    <li><a href="#e12">12. ARP</a></li>
-    <li><a href="#e13">13. SCP</a></li>
-    <li><a href="#e14">14. SSH control</a></li>
-    <li><a href="#e15">15. Persistencia</a></li>
-</ul>
+<div class="content">
 
-<hr>
+<h1>P1. Redes y gestión en Linux</h1>
 
-<!-- EJERCICIOS -->
+<p>
+En esta práctica se configura y analiza una red local entre dos máquinas Linux (cliente y servidor)
+en la red 192.168.50.0/24. Se realizan comprobaciones de conectividad, configuración de red y servicios.
+</p>
 
-<h2 id="e1">1. Interfaces de red</h2>
-<p>Comando:</p>
+---
+
+<div id="e1" class="section">
+<h2>1. Interfaces de red</h2>
+<p>Se usa el comando <code>ip a</code> para ver las interfaces de red disponibles.</p>
 <pre>ip a</pre>
-<p>Explicación: muestra interfaces, IP y MAC del sistema.</p>
-<p>Captura:</p>
-<img src="images/ip-a.png">
+<p>Se comprueba la interfaz activa, la IP asignada y la MAC del equipo.</p>
+<img src="images/ip-a.png" width="600">
+</div>
 
-<hr>
+---
 
-<h2 id="e2">2. Configuración de red</h2>
-<p>Comando:</p>
+<div id="e2" class="section">
+<h2>2. Configuración de red</h2>
+<p>Con <code>ip addr</code> y <code>ip route</code> se revisa la configuración de red.</p>
 <pre>ip addr
 ip route</pre>
-<p>Explicación: muestra configuración IP y rutas del sistema.</p>
-<img src="images/ip-route.png">
+<p>Se observa la red 192.168.50.0/24 y la interfaz usada para salir a esa red.</p>
+<img src="images/route.png" width="600">
+</div>
 
-<hr>
+---
 
-<h2 id="e3">3. Hostname</h2>
-<p>Comando:</p>
-<pre>hostnamectl set-hostname srv01</pre>
-<p>El hostname identifica el equipo en la red.</p>
-<img src="images/hostname.png">
-
-<hr>
-
-<h2 id="e4">4. Netplan</h2>
-<pre>sudo nano /etc/netplan/01-netcfg.yaml
-sudo netplan apply</pre>
-<p>Configura IP estática del sistema.</p>
-<img src="images/netplan.png">
-
-<hr>
-
-<h2 id="e5">5. Ping</h2>
-<pre>ping 192.168.50.10</pre>
-<p>Comprueba conectividad entre máquinas.</p>
-<img src="images/ping.png">
-
-<hr>
-
-<h2 id="e6">6. Hosts</h2>
-<pre>sudo nano /etc/hosts</pre>
-<p>Resuelve nombres localmente sin DNS.</p>
-<img src="images/hosts.png">
-
-<hr>
-
-<h2 id="e7">7. Rutas</h2>
-<pre>ip route</pre>
-<p>Muestra rutas y gateway del sistema.</p>
-<img src="images/routes.png">
-
-<hr>
-
-<h2 id="e8">8. Puertos</h2>
-<pre>ss -tuln</pre>
-<p>Lista puertos en escucha.</p>
-<img src="images/ss.png">
-
-<hr>
-
-<h2 id="e9">9. SSH</h2>
-<pre>sudo apt install openssh-server
-systemctl status ssh</pre>
-<p>Servicio de acceso remoto seguro.</p>
-<img src="images/ssh.png">
-
-<hr>
-
-<h2 id="e10">10. Acceso remoto</h2>
-<pre>ssh usuario@192.168.50.10
-whoami
-hostname</pre>
-<p>Conexión remota al servidor.</p>
-<img src="images/ssh-login.png">
-
-<hr>
-
-<h2 id="e11">11. Interfaces estado</h2>
-<pre>ip link</pre>
-<p>Muestra estado UP/DOWN de interfaces.</p>
-<img src="images/ip-link.png">
-
-<hr>
-
-<h2 id="e12">12. ARP</h2>
-<pre>ip neigh</pre>
-<p>Relación IP ↔ MAC en la red local.</p>
-<img src="images/arp.png">
-
-<hr>
-
-<h2 id="e13">13. SCP</h2>
-<pre>scp prueba.txt usuario@192.168.50.10:/home/usuario</pre>
-<p>Transferencia de archivos por SSH.</p>
-<img src="images/scp.png">
-
-<hr>
-
-<h2 id="e14">14. SSH control</h2>
-<pre>sudo systemctl stop ssh
-sudo systemctl start ssh</pre>
-<p>Control del servicio SSH.</p>
-<img src="images/ssh-service.png">
-
-<hr>
-
-<h2 id="e15">15. Persistencia</h2>
-<pre>ip a
+<div id="e3" class="section">
+<h2>3. Hostname</h2>
+<p>Se comprueba y modifica el nombre del equipo con <code>hostnamectl</code>.</p>
+<pre>
 hostname
-systemctl status ssh</pre>
-<p>La configuración se mantiene tras reiniciar.</p>
-<img src="images/reboot.png">
+sudo hostnamectl set-hostname srv01
+</pre>
+<p>El hostname identifica la máquina dentro de la red.</p>
+<img src="images/hostname.png" width="600">
+</div>
+
+---
+
+<div id="e4" class="section">
+<h2>4. Netplan</h2>
+<p>Se configura la IP estática editando el archivo de Netplan.</p>
+<pre>
+sudo nano /etc/netplan/01-netcfg.yaml
+sudo netplan apply
+</pre>
+<p>Permite asignar IP fija dentro de la red local.</p>
+<img src="images/netplan.png" width="600">
+</div>
+
+---
+
+<div id="e5" class="section">
+<h2>5. Ping</h2>
+<p>Se comprueba conectividad entre máquinas con ping.</p>
+<pre>ping 192.168.50.10</pre>
+<p>Se verifica que hay respuesta entre cliente y servidor.</p>
+<img src="images/ping.png" width="600">
+</div>
+
+---
+
+<div id="e6" class="section">
+<h2>6. Hosts</h2>
+<p>Se configura resolución de nombres en /etc/hosts.</p>
+<pre>
+sudo nano /etc/hosts
+ping srv01
+</pre>
+<p>Permite usar nombres en lugar de IPs.</p>
+<img src="images/hosts.png" width="600">
+</div>
+
+---
+
+<div id="e7" class="section">
+<h2>7. Rutas</h2>
+<pre>ip route</pre>
+<p>Muestra la ruta por defecto del sistema y la red local.</p>
+<img src="images/route2.png" width="600">
+</div>
+
+---
+
+<div id="e8" class="section">
+<h2>8. Puertos</h2>
+<pre>ss -tuln</pre>
+<p>Se muestran los puertos abiertos en el sistema.</p>
+<img src="images/ports.png" width="600">
+</div>
+
+---
+
+<div id="e9" class="section">
+<h2>9. SSH</h2>
+<pre>
+sudo apt install openssh-server
+sudo systemctl status ssh
+</pre>
+<p>Permite acceso remoto seguro al servidor.</p>
+<img src="images/ssh.png" width="600">
+</div>
+
+---
+
+<div id="e10" class="section">
+<h2>10. Acceso remoto</h2>
+<pre>
+ssh usuario@192.168.50.10
+whoami
+hostname
+</pre>
+<p>Se comprueba conexión remota al servidor.</p>
+<img src="images/remote.png" width="600">
+</div>
+
+---
+
+<div id="e11" class="section">
+<h2>11. Interfaces estado</h2>
+<pre>ip link</pre>
+<p>Se comprueba si las interfaces están activas o no.</p>
+<img src="images/link.png" width="600">
+</div>
+
+---
+
+<div id="e12" class="section">
+<h2>12. ARP</h2>
+<pre>ip neigh</pre>
+<p>Se muestran direcciones IP asociadas a MAC.</p>
+<img src="images/arp.png" width="600">
+</div>
+
+---
+
+<div id="e13" class="section">
+<h2>13. SCP</h2>
+<pre>
+scp prueba.txt usuario@192.168.50.10:/home/usuario
+</pre>
+<p>Se transfiere un archivo al servidor.</p>
+<img src="images/scp.png" width="600">
+</div>
+
+---
+
+<div id="e14" class="section">
+<h2>14. Gestión SSH</h2>
+<pre>
+sudo systemctl stop ssh
+sudo systemctl start ssh
+</pre>
+<p>Se comprueba el funcionamiento del servicio SSH.</p>
+<img src="images/ssh2.png" width="600">
+</div>
+
+---
+
+<div id="e15" class="section">
+<h2>15. Reinicio</h2>
+<p>Tras reiniciar se comprueba que la configuración se mantiene.</p>
+<pre>
+ip a
+hostname
+systemctl status ssh
+</pre>
+<p>La configuración de red y servicios se mantiene tras reinicio.</p>
+<img src="images/reboot.png" width="600">
+</div>
+
+</div>
 
 </body>
 </html>
