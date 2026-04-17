@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>UD5 - P1 Redes Linux</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+}
+
+/* MENÚ LATERAL */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    background: #2c3e50;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.sidebar a:hover {
+    background: #34495e;
+}
+
+/* CONTENIDO */
+.content {
+    margin-left: 240px;
+    padding: 20px;
+}
+
+.section {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+h1, h2 {
+    color: #2c3e50;
+}
+
+code {
+    background: #eee;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+pre {
+    background: #1e1e1e;
+    color: #00ff88;
+    padding: 10px;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+<h3 style="color:white; text-align:center;">UD5 P1 Linux</h3>
+<a href="#e1">Interfaces</a>
+<a href="#e2">Rutas</a>
+<a href="#e3">Hostname</a>
+<a href="#e4">Netplan</a>
+<a href="#e5">Ping</a>
+<a href="#e6">Hosts</a>
+<a href="#e7">Route</a>
+<a href="#e8">Puertos</a>
+<a href="#e9">SSH</a>
+<a href="#e10">Acceso remoto</a>
+<a href="#e11">Estado red</a>
+<a href="#e12">ARP</a>
+<a href="#e13">SCP</a>
+<a href="#e14">SSH control</a>
+<a href="#e15">Reinicio</a>
+</div>
+
+<div class="content">
+
+<h1>P1. Redes y gestión en Linux</h1>
+
+<p>
+En esta práctica se trabaja con dos máquinas Linux (cliente y servidor) dentro de la red 192.168.50.0/24.
+El objetivo es comprobar cómo funciona la red, ver la configuración y probar la comunicación entre equipos.
+</p>
+
+---
+
+<div id="e1" class="section">
+<h2>1. Interfaces de red</h2>
+<pre>ip a</pre>
+<p>
+Este comando muestra las interfaces de red del sistema. Aquí se puede ver la IP asignada y la dirección MAC.
+</p>
+<p>
+La interfaz activa es la que tiene una IP dentro de la red 192.168.50.0/24.
+</p>
+</div>
+
+---
+
+<div id="e2" class="section">
+<h2>2. Configuración de red</h2>
+<pre>ip addr
+ip route</pre>
+<p>
+Se revisa la configuración de red y las rutas. Esto permite ver por dónde sale la conexión a Internet o a la red local.
+</p>
+</div>
+
+---
+
+<div id="e3" class="section">
+<h2>3. Hostname</h2>
+<pre>
+hostname
+sudo hostnamectl set-hostname srv01
+</pre>
+<p>
+El hostname es el nombre del equipo dentro de la red. Sirve para identificar cada máquina sin usar IP.
+</p>
+</div>
+
+---
+
+<div id="e4" class="section">
+<h2>4. Netplan</h2>
+<pre>
+sudo nano /etc/netplan/01-netcfg.yaml
+sudo netplan apply
+</pre>
+<p>
+Se configura una IP fija para que el equipo no cambie de dirección cada vez que se reinicia.
+</p>
+</div>
+
+---
+
+<div id="e5" class="section">
+<h2>5. Ping</h2>
+<pre>ping 192.168.50.10</pre>
+<p>
+Se usa para comprobar si hay conexión entre los dos equipos. Si responde, la red funciona correctamente.
+</p>
+</div>
+
+---
+
+<div id="e6" class="section">
+<h2>6. Hosts</h2>
+<pre>
+sudo nano /etc/hosts
+ping srv01
+</pre>
+<p>
+Permite usar nombres en vez de IPs. Es útil en redes pequeñas como esta práctica.
+</p>
+</div>
+
+---
+
+<div id="e7" class="section">
+<h2>7. Rutas</h2>
+<pre>ip route</pre>
+<p>
+Muestra cómo el sistema envía los datos por la red. Se ve la red local y la ruta por defecto.
+</p>
+</div>
+
+---
+
+<div id="e8" class="section">
+<h2>8. Puertos</h2>
+<pre>ss -tuln</pre>
+<p>
+Muestra los servicios que están escuchando en el sistema.
+</p>
+</div>
+
+---
+
+<div id="e9" class="section">
+<h2>9. SSH</h2>
+<pre>
+sudo apt install openssh-server
+sudo systemctl status ssh
+</pre>
+<p>
+Se instala y comprueba SSH para poder acceder remotamente al servidor.
+</p>
+</div>
+
+---
+
+<div id="e10" class="section">
+<h2>10. Acceso remoto</h2>
+<pre>
+ssh usuario@192.168.50.10
+whoami
+hostname
+</pre>
+<p>
+Permite conectarse desde un equipo a otro de forma remota.
+</p>
+</div>
+
+---
+
+<div id="e11" class="section">
+<h2>11. Estado de red</h2>
+<pre>ip link</pre>
+<p>
+Muestra si las interfaces están activas (UP) o apagadas (DOWN).
+</p>
+</div>
+
+---
+
+<div id="e12" class="section">
+<h2>12. ARP</h2>
+<pre>ip neigh</pre>
+<p>
+Relaciona las IP con las direcciones MAC de los dispositivos conectados.
+</p>
+</div>
+
+---
+
+<div id="e13" class="section">
+<h2>13. SCP</h2>
+<pre>
+scp prueba.txt usuario@192.168.50.10:/home/usuario
+</pre>
+<p>
+Sirve para copiar archivos entre máquinas por SSH.
+</p>
+</div>
+
+---
+
+<div id="e14" class="section">
+<h2>14. Control SSH</h2>
+<pre>
+sudo systemctl stop ssh
+sudo systemctl start ssh
+</pre>
+<p>
+Se comprueba que el servicio SSH funciona correctamente.
+</p>
+</div>
+
+---
+
+<div id="e15" class="section">
+<h2>15. Reinicio</h2>
+<pre>
+ip a
+hostname
+systemctl status ssh
+</pre>
+<p>
+Después de reiniciar se comprueba que la configuración sigue igual.
+</p>
+</div>
+
+</div>
+
+</body>
+</html>
