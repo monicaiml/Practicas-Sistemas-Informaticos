@@ -14,7 +14,7 @@ En esta unidad se realizan distintas prácticas relacionadas con redes en sistem
 
 Conexiones de redes y gestión de recursos en sistemas Linux.
 
- [Ver práctica 1](practica1/)
+ [Ver práctica 1](./practica1/)
 
 ---
 
@@ -22,7 +22,7 @@ Conexiones de redes y gestión de recursos en sistemas Linux.
 
 Conexiones de redes y gestión de recursos en sistemas Windows.
 
- [Ver práctica 2](practica2/)
+ [Ver práctica 2](./practica2/)
 
 ---
 
@@ -30,7 +30,7 @@ Conexiones de redes y gestión de recursos en sistemas Windows.
 
 Implementación de un dominio Active Directory.
 
- [Ver práctica 3](practica3/)
+ [Ver práctica 3](./practica3/)
 
 ---
 
