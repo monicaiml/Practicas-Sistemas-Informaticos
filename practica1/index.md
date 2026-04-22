@@ -12,7 +12,7 @@ En esta práctica se trabaja con dos máquinas virtuales Linux (cliente y servid
 ip a
 ```
 
-![Paso 1](imagenes/paso-1.png)
+![Paso 1](images/paso-1.png)
 
 
 ### Explicación
